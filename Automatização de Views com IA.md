@@ -37,8 +37,6 @@ sequenceDiagram
     API_Gemini-->>Prompt_FrontEnd: View gerada
     Prompt_FrontEnd-->>Regra_de_negocio: Gerar Insight
 ```
-
-
 ## Resultado
 
 Nessa última sprint, conseguimos desenvolver um programa que nos permitia receber um requisito de negócio através de um input. Com esse requisito, definimos uma instrução que levaria a Inteligência Artificial (Gemini-flash) a gerar uma consulta em SQL baseando-se na estrutura da tabela especificada. Com essa consulta, pudemos coletar os dados da tabela e apresentar à IA Generativa junto de uma instrução que a orientaria a gerar um insight com base nos dados consultados.
