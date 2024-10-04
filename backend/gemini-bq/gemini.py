@@ -2,8 +2,7 @@ import base64
 import vertexai
 from vertexai.generative_models import GenerativeModel, Part, SafetySetting
 
-
-
+# Configuração da IA
 def generate(prompt: str, instruction: str):
     textsi_1 = instruction
 
@@ -19,12 +18,10 @@ def generate(prompt: str, instruction: str):
         stream=True,
     )
 
-    content = []
+    content = [] # array para transformar em string
     for response in responses:
-        # print(response.text, end="")
         content.append(response.text)
-    # Become to string
-    text = "".join(content)
+    text = "".join(content) # Transforma em string
     return text
 
 generation_config = {

@@ -1,65 +1,48 @@
 from google.cloud import bigquery
 
+# Função para pegar apenas o dado
 def get_data (query: str):
-    # Create a BQ client
-    client = bigquery.Client()
+    client = bigquery.Client() # Criando um cliente bigquery
 
-    # Cleaning string
-    query_cleaned = string_cleaned(query)
+    query_cleaned = string_cleaned(query) # Limpando string
     try:
-        # Running query
-        query_job = client.query(query_cleaned)
+        query_job = client.query(query_cleaned) # Rodando a query
     except Exception as e:
-        # Exception
         print("Erro de consulta")
 
-    # Getting Result
-    results = query_job.result()
-    # Closing client
+    results = query_job.result() # Armazendo o resultado
     client.close()
-    # Become to dictionary
-    data = [dict(row) for row in results] 
+    data = [dict(row) for row in results] # Transformando em um dicionário
     return data
 
 def get_schema (dataset: str, table: str):
-     # Create a BQ client
-    client = bigquery.Client()
+    client = bigquery.Client() # Criando um cliente bigquery
     
-    # Setting Reference
+    # Configurando referência do dataset e da tabela
     dataset_ref = client.dataset(dataset)
     table_ref = dataset_ref.table(table)
 
-    # Getting Schema
+    # Obter o esquema da tabela
     table = client.get_table(table_ref)
     schema = table.schema
 
-    # Closing client
     client.close()
     return schema
 
+# Função para tirar o que não faz parte da consulta
 def string_cleaned (content: str):
     content_cleaned = content.replace("```sql", "").replace("```", "")
     content_cleaned = content_cleaned.strip()
     return content_cleaned
 
-def get_query_in_response(response):
-    match = re.search(r'CREATE\s+OR\s+REPLACE\s+VIEW\s+`[^`]+`\s+AS[\s\S]*?FROM\s+`([^`]+)`', response)
-
-    if match:
-        sql_query = match.group(0).strip()  # Obtemos a parte capturada e removemos espaços em branco
-        print(sql_query)
-        return sql_query
-    else:
-        print("Query não encontrada.")
-        return
-
+# Criando o arquivo SQLX
 def create_sqlx(query, file_name):
     file_name = f"{file_name}.sqlx"
     with open(file_name, "w") as file:
-    # Escreve o conteúdo do SQLX no arquivo
-        file.write(query)
+        file.write(query) # Escreve o conteúdo do SQLX no arquivo
     print(f"Arquivo {file_name} criado com sucesso.")
-    
+
+# Criando o script SQLX
 def create_view(query, dataset, table):
     view = """CREATE OR REPLACE VIEW `tarefa-squad.{}.{}` AS 
     {}""".format(dataset, table, query)
