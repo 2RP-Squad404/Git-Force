@@ -47,3 +47,8 @@ def create_view(query, dataset, table):
     view = """CREATE OR REPLACE VIEW `tarefa-squad.{}.{}` AS 
     {}""".format(dataset, table, query)
     return view
+
+# Utilizando o nome da view para arquivo SQLX
+def name_view_sqlx(view):
+    name_view = """{}.sqlx""".format(view)
+    return name_view

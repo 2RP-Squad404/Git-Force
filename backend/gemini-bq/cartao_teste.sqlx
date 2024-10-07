@@ -1,6 +1,0 @@
-CREATE OR REPLACE VIEW `tarefa-squad.teste.qualquer_coisa` AS 
-    SELECT product_name, SUM(order_item_quantity) AS total_quantity_sold
-FROM testando_ia.incom
-GROUP BY product_name
-ORDER BY total_quantity_sold DESC
-LIMIT 1;
