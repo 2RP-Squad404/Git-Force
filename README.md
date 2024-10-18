@@ -28,8 +28,8 @@ Implementar uma solução automatizada, utilizando o modelo de IA Gemini integra
 1. Clone o repositório:
 
 ```bash
-git clone https://github.com/seu_usuario/seu_projeto.git
-cd seu_projeto
+git clone https://github.com/2RP-Squad404/Git-Force.git
+cd Git-Force
 ```
 
 2. Crie um ambiente virtual e ative-o:
