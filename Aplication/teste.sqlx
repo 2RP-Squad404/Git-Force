@@ -1,4 +1,4 @@
-CREATE OR REPLACE VIEW tarefa-squad.teste.view_quinta AS SELECT product_name, MIN(product_price) AS menor_preco
+CREATE OR REPLACE VIEW tarefa-squad.teste.view_sexta AS SELECT product_name, MIN(product_price) AS menor_preco
 FROM testando_ia.incom
 GROUP BY product_name
 ORDER BY menor_preco ASC
