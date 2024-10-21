@@ -1,5 +1,5 @@
-CREATE OR REPLACE VIEW tarefa-squad.teste.view_sexta AS SELECT product_name, MIN(product_price) AS menor_preco
+CREATE OR REPLACE VIEW tarefa-squad.teste.view_segunda AS SELECT product_name, MAX(product_price) AS highest_price
 FROM testando_ia.incom
 GROUP BY product_name
-ORDER BY menor_preco ASC
+ORDER BY highest_price DESC
 LIMIT 1;
