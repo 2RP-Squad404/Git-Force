@@ -39,7 +39,7 @@ def enviar_mensagem():
     if mensagem_usuario.strip() == "":
         st.error("Por favor, digite uma mensagem.")
         return
-    st.session_state.historico.append(f"Você: {mensagem_usuario}") # Salvar no histórico a mensagem do usuário
+    st.session_state.historico.append(f"Você: {mensagem_usuario}")  # Salvar no histórico a mensagem do usuário
 
     # Processar a resposta do bot
     resposta = processar_prompt(
@@ -61,17 +61,17 @@ def enviar_mensagem():
 
 # Verificação das respostas iniciais e transição para o chat normal
 def enviar_respostas_iniciais():
-    respostas_atualizadas = [
-        st.session_state[f"resposta_inicial_{i}"] for i in range(4)
-    ]
-    
+    # Atualizar diretamente o session_state
+    for i in range(4):
+        st.session_state.respostas_iniciais[i] = st.session_state[f"resposta_inicial_{i}"]
+
     # Verificar se todas as respostas foram preenchidas
-    if all(resposta != "" for resposta in respostas_atualizadas):
+    if all(resposta != "" for resposta in st.session_state.respostas_iniciais):
         # Salvar as respostas nas variáveis do session_state
-        st.session_state.dataset = respostas_atualizadas[0]
-        st.session_state.table = respostas_atualizadas[1]
-        st.session_state.target_dataset = respostas_atualizadas[2]
-        st.session_state.name_view = respostas_atualizadas[3]
+        st.session_state.dataset = st.session_state.respostas_iniciais[0]
+        st.session_state.table = st.session_state.respostas_iniciais[1]
+        st.session_state.target_dataset = st.session_state.respostas_iniciais[2]
+        st.session_state.name_view = st.session_state.respostas_iniciais[3]
         
         # Mudar para a fase de conversa
         st.session_state.fase = "conversa"
@@ -83,12 +83,13 @@ def enviar_respostas_iniciais():
 if st.session_state.fase == "perguntas_iniciais":
     st.header("Responda as perguntas abaixo:")
     for i, pergunta in enumerate(perguntas_iniciais):
-        st.session_state.respostas_iniciais[i] = st.text_input(
+        st.text_input(
             pergunta,
             value=st.session_state.respostas_iniciais[i],
             key=f"resposta_inicial_{i}"
         )
-    if st.button("Enviar Respostas"):
+    
+    if st.button("Enviar Respostas", on_click=enviar_respostas_iniciais):
         enviar_respostas_iniciais()
 
 # Fase da conversa com IA
@@ -99,7 +100,7 @@ elif st.session_state.fase == "conversa":
         exibir_mensagem(tipo.strip(), texto.strip())
 
     # Campo para o usuário digitar a mensagem com on_change
-    mensagem_usuario = st.text_input(
+    st.text_input(
         "Digite sua mensagem:",
         value=st.session_state.mensagem_input,
         key="mensagem_input",
