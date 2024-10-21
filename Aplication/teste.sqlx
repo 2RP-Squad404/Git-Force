@@ -1,0 +1,5 @@
+CREATE OR REPLACE VIEW tarefa-squad.teste.view_segunda AS SELECT product_name, MAX(product_price) AS highest_price
+FROM testando_ia.incom
+GROUP BY product_name
+ORDER BY highest_price DESC
+LIMIT 1;
